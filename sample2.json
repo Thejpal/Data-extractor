@@ -1,0 +1,32 @@
+{
+    "1" : [
+        {
+            "text_frame" : {
+                "data" : "",
+                "shape_type" : ""
+            }
+        },
+        {
+            "text_frame" : {
+                "data" : "",
+                "shape_type" : ""
+            }
+        },
+        {
+            "group" : [
+                {
+                    "text_frame" : {
+                        "data" : "",
+                        "shape_type" : ""
+                    }
+                },
+                {
+                    "text_frame" : {
+                        "data" : "",
+                        "shape_type" : ""
+                    }
+                }
+            ]
+        }
+    ]
+}

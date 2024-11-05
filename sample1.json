@@ -1,0 +1,82 @@
+{
+    "1" : {
+        "text_frame" : {
+            "data" : "",
+            "shape_type" : ""
+        },
+        "table" : {
+            "data" : "",
+            "shape_type" : ""
+        },
+        "chart" : {
+            "data" : "",
+            "shape_type" : ""
+        },
+        "picture" : {
+            "data" : "",
+            "bytes_data" : "",
+            "shape_type" : "",
+            "comment" : ""
+        },
+        "group" : {
+            "text_frame" : {
+                "data" : "",
+                "shape_type" : ""
+            },
+            "table" : {
+                "data" : "",
+                "shape_type" : ""
+            },
+            "chart" : {
+                "data" : "",
+                "shape_type" : ""
+            },
+            "picture" : {
+                "data" : "",
+                "bytes_data" : "",
+                "shape_type" : "",
+                "comment" : ""
+            }
+        }
+    },
+    "2" : {
+        "text_frame" : {
+            "data" : "",
+            "shape_type" : ""
+        },
+        "table" : {
+            "data" : "",
+            "shape_type" : ""
+        },
+        "chart" : {
+            "data" : "",
+            "shape_type" : ""
+        },
+        "picture" : {
+            "data" : "",
+            "bytes_data" : "",
+            "shape_type" : "",
+            "comment" : ""
+        },
+        "group" : {
+            "text_frame" : {
+                "data" : "",
+                "shape_type" : ""
+            },
+            "table" : {
+                "data" : "",
+                "shape_type" : ""
+            },
+            "chart" : {
+                "data" : "",
+                "shape_type" : ""
+            },
+            "picture" : {
+                "data" : "",
+                "bytes_data" : "",
+                "shape_type" : "",
+                "comment" : ""
+            }
+        }
+    }
+}
