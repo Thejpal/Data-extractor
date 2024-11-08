@@ -40,6 +40,15 @@ def extract_text(shape):
     }
     return data
 
+def extract_placeholder(shape):
+    if shape.has_text_frame:
+        return extract_text(shape)
+    data = {
+        "data" : "Unknown Placeholder data",
+        "shape_type" : shape.shape_type
+    }
+    return data
+
 # Switches to different data extractors based on the shape type. Returns the function object which can be run in the original function
 def switch_type(shape_type):
     switch = {
@@ -57,7 +66,7 @@ def switch_type(shape_type):
         11 : extract_shape, # "linked_picture",
         12 : extract_shape, # "ole_control_object",
         13 : extract_shape, # "picture",
-        14 : extract_shape, # "placeholder",
+        14 : extract_placeholder, # "placeholder",
         16 : extract_shape, # "media",
         17 : extract_text, # "textbox",
         18 : extract_shape, # "script_anchor",
