@@ -15,6 +15,8 @@ def extract_slide(slide):
     slide_data = []
 
     for shape in slide.shapes:
+        if shape.shape_type == 3:
+            print("chart")
         # Extracts data for each shape_type based on the switch condition
         slide_data.append(switch_type(shape.shape_type)(shape))
 
@@ -23,8 +25,11 @@ def extract_slide(slide):
 def extract_shape(shape):
     return shape.shape_type
 
+def binary_to_decoded_bytes(bytes):
+    return base64.b64encode(bytes).decode("utf-8")
+
 def extract_picture(shape):
-    image_data = base64.b64encode(shape.image.blob).decode("utf-8")
+    image_data = binary_to_decoded_bytes(shape.image.blob)
     data = {
         "data" : image_data,
         "shape_type" : shape.shape_type
@@ -94,7 +99,7 @@ def switch_type(shape_type):
         10 : extract_shape, # "linked_ole_object",
         11 : extract_shape, # "linked_picture",
         12 : extract_shape, # "ole_control_object",
-        13 : extract_shape, # "picture",
+        13 : extract_picture, # "picture",
         14 : extract_placeholder, # "placeholder",
         16 : extract_shape, # "media",
         17 : extract_text, # "textbox",
