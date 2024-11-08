@@ -1,4 +1,6 @@
 from pptx import Presentation
+from io import BytesIO
+import base64
 
 # Extracts the data from the PPT file
 def load(file):
@@ -19,7 +21,15 @@ def extract_data(slide):
     return slide_data
 
 def extract_shape(shape):
-    return shape.shape_id
+    return shape.shape_type
+
+def extract_picture(shape):
+    image_data = base64.b64encode(shape.image.blob).decode("utf-8")
+    data = {
+        "data" : image_data,
+        "shape_type" : shape.shape_type
+    }
+    return data
 
 # Switches to different data extractors based on the shape type. Returns the function object which can be run in the original function
 def switch_type(shape_type):
@@ -37,7 +47,7 @@ def switch_type(shape_type):
         10 : extract_shape, # "linked_ole_object",
         11 : extract_shape, # "linked_picture",
         12 : extract_shape, # "ole_control_object",
-        13 : extract_shape, # "picture",
+        13 : extract_picture, # "picture",
         14 : extract_shape, # "placeholder",
         16 : extract_shape, # "media",
         17 : extract_shape, # "textbox",
