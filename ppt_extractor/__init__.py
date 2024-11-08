@@ -1,5 +1,4 @@
 from pptx import Presentation
-from io import BytesIO
 import base64
 
 # Extracts the data from the PPT file
@@ -15,6 +14,8 @@ def extract_data(slide):
     slide_data = []
 
     for shape in slide.shapes:
+        # if shape.has_text_frame:
+        #     print(shape.text)
         # Extracts data for each shape_type based on the switch condition
         slide_data.append(switch_type(shape.shape_type)(shape))
 
@@ -27,6 +28,14 @@ def extract_picture(shape):
     image_data = base64.b64encode(shape.image.blob).decode("utf-8")
     data = {
         "data" : image_data,
+        "shape_type" : shape.shape_type
+    }
+    return data
+
+def extract_text(shape):
+    text_data = shape.text
+    data = {
+        "data" : text_data,
         "shape_type" : shape.shape_type
     }
     return data
@@ -47,10 +56,10 @@ def switch_type(shape_type):
         10 : extract_shape, # "linked_ole_object",
         11 : extract_shape, # "linked_picture",
         12 : extract_shape, # "ole_control_object",
-        13 : extract_picture, # "picture",
+        13 : extract_shape, # "picture",
         14 : extract_shape, # "placeholder",
         16 : extract_shape, # "media",
-        17 : extract_shape, # "textbox",
+        17 : extract_text, # "textbox",
         18 : extract_shape, # "script_anchor",
         19 : extract_shape, # "table",
         20 : extract_shape, # "canvas",
