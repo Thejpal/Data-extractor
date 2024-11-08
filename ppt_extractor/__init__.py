@@ -43,11 +43,37 @@ def extract_placeholder(shape):
     if shape.has_text_frame:
         return extract_text(shape)
     elif shape.has_table:
-        return extract_shape(shape)
+        return extract_table(shape)
     elif shape.has_chart:
         return extract_slide(shape)
     data = {
         "data" : "Unknown Placeholder data",
+        "shape_type" : shape.shape_type
+    }
+    return data
+
+def extract_table(shape):
+    rows_data = []
+    for row in shape.table.rows:
+        row_data = []
+        for cell in row.cells:
+            row_data.append(cell.text)
+        rows_data.append(row_data)
+    df = pd.DataFrame(rows_data)
+
+    # Code for having first row as a column
+    # df.columns = df.iloc[0]
+    # df = df[1:]
+
+    table_data = "The following is a table data with default columns : " + "\n"
+    for index, row in df.iterrows():
+        for index, item in row.items():
+            table_data += f"{index} : {item}"
+            table_data += ", "
+        table_data += "\n"
+    
+    data = {
+        "data" : table_data,
         "shape_type" : shape.shape_type
     }
     return data
@@ -73,7 +99,7 @@ def switch_type(shape_type):
         16 : extract_shape, # "media",
         17 : extract_text, # "textbox",
         18 : extract_shape, # "script_anchor",
-        19 : extract_shape, # "table",
+        19 : extract_table, # "table",
         20 : extract_shape, # "canvas",
         21 : extract_shape, # "diagram",
         22 : extract_shape, # "ink",
