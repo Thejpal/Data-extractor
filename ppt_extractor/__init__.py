@@ -13,45 +13,42 @@ def extract_data(slide):
     slide_data = []
 
     for shape in slide.shapes:
-        # Recursively extracts data for shape_type "group"
-        if shape.shape_type == 6:
-            data = {"group" : extract_data(shape)}
-            slide_data.append(data)
-        
-        # Switches between extractors for each shape based on shape type
-        else:
-            slide_data.append(switch_type(shape.shape_type)(shape))
+        # Extracts data for each shape_type based on the switch condition
+        slide_data.append(switch_type(shape.shape_type)(shape))
 
     return slide_data
+
+def extract_shape(shape):
+    return shape.shape_id
 
 # Switches to different data extractors based on the shape type. Returns the function object which can be run in the original function
 def switch_type(shape_type):
     switch = {
-        -2 : "mixed",
-        1 : "autoshape",
-        2 : "callout",
-        3 : "chart",
-        4 : "comment",
-        5 : "freeform",
-        6 : "extract_data",
-        7 : "embedded_ole_object",
-        8 : "form_control",
-        9 : "line",
-        10 : "linked_ole_object",
-        11 : "linked_picture",
-        12 : "ole_control_object",
-        13 : "picture",
-        14 : "placeholder",
-        16 : "media",
-        17 : "textbox",
-        18 : "script_anchor",
-        19 : "table",
-        20 : "canvas",
-        21 : "diagram",
-        22 : "ink",
-        23 : "ink_comment",
-        24 : "igx_graphic",
-        25 : "",
-        26 : "web_video"
+        -2 : extract_shape, # "mixed",
+        1 : extract_shape, # "autoshape",
+        2 : extract_shape, # "callout",
+        3 : extract_shape, # "chart",
+        4 : extract_shape, # "comment",
+        5 : extract_shape, # "freeform",
+        6 : extract_data, # "group"
+        7 : extract_shape, # "embedded_ole_object",
+        8 : extract_shape, # "form_control",
+        9 : extract_shape, # "line",
+        10 : extract_shape, # "linked_ole_object",
+        11 : extract_shape, # "linked_picture",
+        12 : extract_shape, # "ole_control_object",
+        13 : extract_shape, # "picture",
+        14 : extract_shape, # "placeholder",
+        16 : extract_shape, # "media",
+        17 : extract_shape, # "textbox",
+        18 : extract_shape, # "script_anchor",
+        19 : extract_shape, # "table",
+        20 : extract_shape, # "canvas",
+        21 : extract_shape, # "diagram",
+        22 : extract_shape, # "ink",
+        23 : extract_shape, # "ink_comment",
+        24 : extract_shape, # "igx_graphic",
+        25 : extract_shape, # "",
+        26 : extract_shape, # "web_video"
     }
     return switch.get(shape_type)
