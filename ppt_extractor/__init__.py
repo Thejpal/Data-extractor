@@ -1,21 +1,20 @@
 from pptx import Presentation
 import base64
+import pandas as pd
 
 # Extracts the data from the PPT file
 def load(file):
     ppt = Presentation(file)
     ppt_data = {}
     for idx, slide in enumerate(ppt.slides):
-        ppt_data[idx] = extract_data(slide)
+        ppt_data[idx] = extract_slide(slide)
     return ppt_data
 
 # Extracts data from a PPT slide
-def extract_data(slide):
+def extract_slide(slide):
     slide_data = []
 
     for shape in slide.shapes:
-        # if shape.has_text_frame:
-        #     print(shape.text)
         # Extracts data for each shape_type based on the switch condition
         slide_data.append(switch_type(shape.shape_type)(shape))
 
@@ -43,6 +42,10 @@ def extract_text(shape):
 def extract_placeholder(shape):
     if shape.has_text_frame:
         return extract_text(shape)
+    elif shape.has_table:
+        return extract_shape(shape)
+    elif shape.has_chart:
+        return extract_slide(shape)
     data = {
         "data" : "Unknown Placeholder data",
         "shape_type" : shape.shape_type
@@ -58,7 +61,7 @@ def switch_type(shape_type):
         3 : extract_shape, # "chart",
         4 : extract_shape, # "comment",
         5 : extract_shape, # "freeform",
-        6 : extract_data, # "group"
+        6 : extract_slide, # "group"
         7 : extract_shape, # "embedded_ole_object",
         8 : extract_shape, # "form_control",
         9 : extract_shape, # "line",
