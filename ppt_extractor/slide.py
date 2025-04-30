@@ -3,9 +3,11 @@ from .picture import extract_picture
 from .table import extract_table
 from .placeholder import extract_placeholder
 from .textbox import extract_text
+from .media import extract_media
+from pptx.slide import Slide
 
 # Extracts data from a PPT slide
-def extract_slide(slide):
+def extract_slide(slide: Slide):
     slide_data = []
 
     for shape in slide.shapes:
@@ -34,7 +36,7 @@ def switch_type(shape_type):
         12 : extract_shape, # "ole_control_object",
         13 : extract_picture, # "picture",
         14 : extract_placeholder, # "placeholder",
-        16 : extract_shape, # "media",
+        16 : extract_media, # "media",
         17 : extract_text, # "textbox",
         18 : extract_shape, # "script_anchor",
         19 : extract_table, # "table",
